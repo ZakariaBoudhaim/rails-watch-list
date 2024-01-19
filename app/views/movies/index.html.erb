@@ -1,0 +1,8 @@
+<h1> landing page </h1>
+<ul>
+<% @movies.each do |movie|  %>
+
+   <li> <%=link_to movie.title , movie_path(movie)%> <img src="<%=movie.post_url%>" alt="movies" style="height: 50px;width: 50px;"></li>
+<% end %>
+<%= link_to "list",  lists_path %>
+</ul>
