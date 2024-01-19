@@ -3,10 +3,9 @@
 <% @movies.each do |movie| %>
 <div class="card my-1" style="width: 18rem;">
   <img src="<%=movie.post_url%>/100px180/" alt="Card image cap">
-  <div class="card-body">>
+  <div class="card-body">
     <h5 class="card-title"><%= movie.title %></h5>
     <p class="card-text"><%=movie.overview%></p>
-    <a href="#" class="btn btn-primary">Go somewhere</a>
   </div>
 </div>
 <% end %>

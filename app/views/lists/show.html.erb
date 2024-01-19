@@ -1,22 +1,68 @@
-<nav class="navbar navbar-dark bg-primary">
-<img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.flaticon.com%2Ffree-icon%2Fpopcorn_3418886&psig=AOvVaw0tHWKpgfVhmx-8OIC2QfwU&ust=1705710090011000&source=images&cd=vfe&ved=0CBIQjRxqFwoTCKDw2bGX6IMDFQAAAAAdAAAAABAE//25px25/" alt="">
+<div class="navbar navbar-expand-sm navbar-light navbar-lewagon ">
+  <div class="container-fluid">
+    <%= link_to "#", class: "navbar-brand" do %>
+      <%= image_tag "https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/logo.png" %>
 
-</nav>
+    <% end %>
 
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto">
+        <%# if user_signed_in? %>
+          <li class="nav-item active">
+            <%= link_to "Home", "#", class: "nav-link" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Messages", "#", class: "nav-link" %>
+          </li>
+          <li class="nav-item dropdown">
+            <%= image_tag "https://media.licdn.com/dms/image/D4E03AQGmCpui6XxumA/profile-displayphoto-shrink_400_400/0/1703707133508?e=1710979200&v=beta&t=3BkrbWFk7nn4n8n-DmNWLD6OZA3pQJCXxfaQBgUbVFg", class: "avatar dropdown-toggle", id: "navbarDropdown", data: { bs_toggle: "dropdown" }, 'aria-haspopup': true, 'aria-expanded': false %>
+            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+              <%= link_to "Action", "#", class: "dropdown-item" %>
+              <%= link_to "Another action", "#", class: "dropdown-item" %>
+              <%= link_to "Log out", "#", class: "dropdown-item", data: {turbo_method: :delete} %>
+            </div>
+          </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="banner mb-1" style="background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url(https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);">
+  <div class="container">
+    <h1 class="text-center"><%= @list.name.capitalize %></h1>
+  </div>
+</div>
+<div class="row">
+    <div class="col-sm-12 text-start" style="padding-left:100px;">
+        <button id="btnSearch" class="btn btn-primary btn-md center-block" Style="width: 150px;" OnClick="btnSearch_Click" ><%= link_to "add a movie", new_list_bookmark_path(@list), class:"text-decoration-none text-white" %></button>
+         <button id="btnClear" class="btn btn-warning btn-md center-block" Style="width: 150px;" OnClick="btnClear_Click" ><%= link_to "Edit #{@list.name}", edit_list_path(@list), class:"text-decoration-none text-white" %></button>
+         <button id="btnClear" class="btn btn-danger btn-md center-block" Style="width: 150px;" OnClick="btnClear_Click" ><%= link_to "Delete #{@list.name}", lists_path(@list), method: :delete, class:"text-decoration-none text-white" %></button>
+     </div>
 <div class="container mt-5">
-<%= link_to "add a movie", new_list_bookmark_path(@list) %>
-  <h1><%= @list.name %> </h1>
+<div ><%= link_to "Back to all list", lists_path, class: "btn btn-success ml-5" %></div>
   <ul>
      <% @list.movies.each do |movie| %>
       <% bookmark = Bookmark.find_by(list: @list, movie: movie) %>
-         <li><strong><%= movie.title %> <span class="text-muted font-weight-normal"> <%= movie.rating %> <i class="fas fa-star star-yellow"></i></span></strong>
-         <%= button_to "delete#{movie.title}", bookmark_path(bookmark), method: :delete, class:"btn btn-warning" %></li>
+         <div class="row">
+    <div class="col-lg-6 mx-auto">
 
-  </ul>
+        <!-- CUSTOM BLOCKQUOTE -->
+        <blockquote class="blockquote blockquote-custom bg-white p-5 shadow rounded">
+          <img src="<%= movie.post_url%>" alt="" style="width:100px;">
+            <div class="blockquote-custom-icon bg-info shadow-sm"><i class="fa fa-quote-left text-white"></i></div>
+            <p class="mb-0 mt-2 font-italic">"<%= movie.overview %>"</p>
+            <footer class="blockquote-footer pt-4 mt-4 border-top"><%= movie.title.capitalize %>
+            <%= button_to "delete", bookmark_path(bookmark), method: :delete, class:"btn btn-warning" %>
+            </footer>
+        </blockquote><!-- END -->
+
+    </div>
+</div></li>
   <% end %>
-  <%= link_to "Edit #{@list.name}", edit_list_path(@list) %>
+   </ul>
   <br>
-  <%= button_to "Delete #{@list.name}", list_path(@list), method: :delete %>
+
   <br>
-  <%= link_to "Back to all list", lists_path %>
